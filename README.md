@@ -65,3 +65,19 @@ print(f"Confidence Score: {results[0]['score']}")
 | `register_corpus()` | `custom_list: List[Dict]` | `None` | Appends custom cultural JSON datasets to the active index. |
 | `search_by_text()` | `query: str, top_k: int` | `List[Dict]` | Executes hybrid vector retrieval with ASCII-folding & diacritic parity. |
 | `search_by_vision()` | `image_embedding, top_k: int` | `Dict` | Cross-modal visual search with Null Anchor thresholding. |
+
+
+---
+
+## 🏛️ Enterprise & Institutional API Access (Museums & Archives)
+
+`agba-engine` provides specialized integration hooks for cultural institutions, digital heritage archives, and global museum databases seeking high-fidelity index retrieval for native orthographies, 3D artifacts, and historical vocalization assets.
+
+* **Audio & Vocalization Pipeline:** Endpoints for indexing pitch-contour models, tonal pronunciation vectors, and spoken indigenous archives.
+* **Museum Corpus Sync:** Direct ingestion pipelines for institutional digital asset management (DAM) platforms.
+
+For API access keys, custom corpus integration support, or institutional partnerships, reach out directly or open a request on our Hugging Face Space:
+
+* **GitHub Repository:** [Agba-Engine-v5.1.8 on GitHub](https://github.com/AgbaVLMengine/Agba-Engine-v5.1.8)
+* **Hugging Face Space:** [Agba Engine Live Demo & Community](https://huggingface.co/spaces/AgbaVLMengine/Agba-Engine)
+* **Direct Contact:** `only1mooseylion@gmail.com`
