@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*$py.class
+build/
+dist/
+*.egg-info/
+.env
+.ipynb_checkpoints/
+*.npy
+
+# Ignore Google Drive Virtual Shortcuts
+*.gdoc
+*.gsheet
+*.gslides
+*.gshortcut
+drive/
