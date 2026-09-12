@@ -1,18 +1,16 @@
 # 🏛️ Agba Engine (`agba-engine`)
 
-**Version:** 5.1.8  
+**Version:** 5.2.4  
 **Author & Lead Architect:** Aruna Olanrewaju Kabiru  
 **License:** `RAIL-Cultural-Heritage-v1.0`  
 
-`agba-engine` is a multi-modal, diacritic-preserving retrieval framework engineered to index Global Cultural Heritage, Indigenous Scripts, and Tonal Orthographies without semantic stripping or unicode degradation.
+`agba-engine` is a cross-modal vision and diacritic-preserving text retrieval framework engineered to index Global Cultural Heritage, Indigenous Scripts, and Tonal Orthographies without semantic stripping, Unicode degradation, or sub-token drift.
 
 ---
 
 ## 🌍 The Mission: Preserving Global Heritage
 
-Standard LLMs and vector search engines strip diacritics, flatten tonal markers, and misclassify rare indigenous vocabulary. **Agba Engine** provides an open, diacritic-proof retrieval architecture that preserves native orthographies in their full canonical purity.
-
-Developers and cultural archivists globally can leverage `agba-engine` to register, index, and retrieve cultural assets across any language or script.
+Standard LLMs and vector search engines strip diacritics, flatten tonal markers, and misclassify rare indigenous vocabulary. **Agba Engine** provides an open, diacritic-proof dual-retrieval architecture that preserves native orthographies in their full canonical purity while integrating neural zero-shot vision search.
 
 ---
 
@@ -20,40 +18,26 @@ Developers and cultural archivists globally can leverage `agba-engine` to regist
 
 ### Installation
 ```bash
-pip install agba-engine==5.1.8
+pip install agba-engine==5.2.4
 ```
 
-### Registering Your Local Cultural Corpus
-You can register and search any custom cultural dataset dynamically using `register_corpus()`:
+### Initializing Engine & Executing Searches
 
 ```python
-from agba_engine.core.engine import AgbaSearchEngine
+from agba_engine import AgbaProductionEngine
 
-# Initialize the engine
-engine = AgbaSearchEngine()
+# Initialize dual engine (loads bundled ground-truth corpus & static SigLIP embeddings)
+engine = AgbaProductionEngine()
 
-# 1. Define your indigenous/cultural corpus entries
-custom_heritage_data = [
-    {
-        "id": "Opón Ifá", 
-        "class": "Divination Artefacts", 
-        "description": "Sacred carved wooden tray used in Traditional Divination ceremonies."
-    },
-    {
-        "id": "Ìroko", 
-        "class": "Botany & Sacred Trees", 
-        "description": "A large hardwood Tree from tropical Africa associated with Spiritual reverence."
-    }
-]
+# 1. Deterministic Text Retrieval (Diacritic & ASCII-Folded Parity)
+text_results = engine.search_by_text("Opon Ifa", top_k=1)
+print(f"Retrieved Entity: {text_results[0]['id']} | Score: {text_results[0]['score']}")
 
-# 2. Register your corpus dynamically into the active search index
-engine.register_corpus(custom_heritage_data)
-
-# 3. Query using plain ASCII or diacritic-preserved text
-results = engine.search_by_text("Opon Ifa", top_k=1)
-print(f"Retrieved Entity: {results[0]['id']} ({results[0]['classification']})")
-print(f"Description: {results[0]['description']}")
-print(f"Confidence Score: {results[0]['score']}")
+# 2. Cross-Modal Neural Vision Search (SigLIP + OOD Noise Guardrail)
+vision_results = engine.search_by_vision("https://example.com/yewa_beads.jpg", top_k=3, ood_threshold=0.0600)
+if vision_results["status"] == "MATCH_FOUND":
+    for hit in vision_results["results"]:
+        print(f"Rank {hit['rank']}: {hit['id']} ({hit['class']}) — Cosine: {hit['raw_cosine']}")
 ```
 
 ---
@@ -62,10 +46,8 @@ print(f"Confidence Score: {results[0]['score']}")
 
 | Method | Parameters | Return Type | Description |
 | :--- | :--- | :--- | :--- |
-| `register_corpus()` | `custom_list: List[Dict]` | `None` | Appends custom cultural JSON datasets to the active index. |
-| `search_by_text()` | `query: str, top_k: int` | `List[Dict]` | Executes hybrid vector retrieval with ASCII-folding & diacritic parity. |
-| `search_by_vision()` | `image_embedding, top_k: int` | `Dict` | Cross-modal visual search with Null Anchor thresholding. |
-
+| `search_by_text()` | `text_query: str`, `top_k: int = 5` | `List[Dict]` | Executes deterministic token retrieval with ASCII-folding (`0.9600`) & exact diacritic parity (`1.0000`). |
+| `search_by_vision()` | `image_input: Union[str, Image.Image]`, `top_k: int = 5`, `ood_threshold: float = 0.0600` | `Dict` | Cross-modal SigLIP visual search against pre-computed static embeddings with OOD noise rejection. |
 
 ---
 
@@ -78,6 +60,6 @@ print(f"Confidence Score: {results[0]['score']}")
 
 For API access keys, custom corpus integration support, or institutional partnerships, reach out directly or open a request on our Hugging Face Space:
 
-* **GitHub Repository:** [Agba-Engine-v5.1.8 on GitHub](https://github.com/AgbaVLMengine/Agba-Engine-v5.1.8)
-* **Hugging Face Space:** [Agba Engine Live Demo & Community](https://huggingface.co/spaces/AgbaVLMengine/Agba-Engine)
+* **GitHub Repository:** [Agba-Engine on GitHub](https://github.com/AgbaVLMengine/Agba-Engine-v5.2.4)
+* **Hugging Face Space:** [Agba Engine Live Demo & Community](https://https://huggingface.co/spaces/OcculusPanther/Agba-engine-demo)
 * **Direct Contact:** `only1mooseylion@gmail.com`
