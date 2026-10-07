@@ -1,3 +1,12 @@
+> [!IMPORTANT]
+> ### 🏛️ Repository Archived — Active Development Moved
+> **This repository contains the archived v5.2.4 release of Àgbà Engine.**  
+> Active development, Google Cloud Run microservices, React web client, and the unified 1,007-entity multi-modal corpus have migrated to our central command center:  
+> 👉 **[AgbaVLMengine/agba-engine](https://github.com/AgbaVLMengine/agba-engine)**
+
+---
+
+
 # 🏛️ Agba Engine (`agba-engine`)
 
 **Version:** 5.2.4  
